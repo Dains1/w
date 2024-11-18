@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Каталог черного чая</title>
+    <title>Регистрация и обратная связь</title>
     <link rel="stylesheet" href="css/styles.css">
     <style>
         body {
@@ -17,38 +17,6 @@
             padding: 10px;
             text-align: center;
         }
-        nav {
-            margin: 10px 0;
-        }
-        nav ul {
-            list-style-type: none;
-            padding: 0;
-        }
-        nav ul li {
-            display: inline;
-            margin: 0 10px;
-        }
-        nav button {
-            background: none;
-            border: none;
-            color: white;
-            cursor: pointer;
-        }
-        .product-grid {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-around;
-            padding: 20px;
-        }
-        .product-grid li {
-            list-style-type: none;
-            margin: 10px;
-            text-align: center;
-        }
-        .product-grid img {
-            max-width: 200px;
-            height: auto;
-        }
         footer {
             text-align: center;
             padding: 20px;
@@ -56,55 +24,11 @@
             color: white;
             position: relative;
         }
-        .cart {
-            display: none;
-            position: fixed;
-            top: 50px;
-            right: 20px;
-            width: 300px;
-            background-color: white;
-            border: 1px solid #ccc;
-            padding: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        .cart.active {
-            display: block;
-        }
-        .cart-icon {
-            cursor: pointer;
-            position: relative;
-        }
-        .cart-icon span {
-            position: absolute;
-            top: -5px;
-            right: -10px;
-            background: red;
-            color: white;
-            border-radius: 50%;
-            padding: 2px 5px;
-        }
-        .hidden {
-            display: none;
-        }
     </style>
 </head>
 <body>
     <header>
-        <h1>Каталог черного чая</h1>
-        <nav>
-            <div class="hamburger" onclick="toggleMenu()">
-                &#9776;
-            </div>
-            <ul id="navbar" class="hidden">
-                <li><button onclick="location.href='index.html'">Главная</button></li>
-                <li><button onclick="location.href='black-tea.html'">Каталог черного чая</button></li>
-                <li><button onclick="location.href='#'">О нас</button></li>
-                <li><button onclick="location.href='#'">Контакты</button></li>
-            </ul>
-        </nav>
-        <div class="cart-icon" onclick="toggleCart()">
-            🛒 <span id="cart-count">0</span>
-        </div>
+        <h1>Регистрация и обратная связь</h1>
     </header>
     <main>
         <!-- Форма регистрации -->
@@ -124,64 +48,29 @@
             </form>
         </section>
 
+        <!-- Форма обратной связи -->
         <section>
-            <h2>Новинки черного чая</h2>
-            <ul class="product-grid">
-                <li>
-                    <a href="#" data-id="1" data-name="Чай 1" data-price="300" onclick="addToCart(1, 'Чай 1', 300)">
-                        <img src="images/tea1.jpg" alt="Чай 1">
-                        <p>Чай 1</p>
-                    </a>
-                </li>
-                <li>
-                    <a href="#" data-id="2" data-name="Чай 2" data-price="350" onclick="addToCart(2, 'Чай 2', 350)">
-                        <img src="images/tea2.jpg" alt="Чай 2">
-                        <p>Чай 2</p>
-                    </a>
-                </li>
-                <li>
-                    <a href="#" data-id="3" data-name="Чай 3" data-price="400" onclick="addToCart(3, 'Чай 3', 400)">
-                        <img src="images/tea3.jpg" alt="Чай 3">
-                        <p>Чай 3</p>
-                    </a>
-                </li>
-            </ul>
+            <h2>Обратная связь</h2>
+            <form id="feedback-form" onsubmit="submitFeedback(event)">
+                <label for="name">Имя:</label>
+                <input type="text" id="name" name="name" required>
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+
+                <label for="message">Сообщение:</label>
+                <textarea id="message" name="message" required></textarea>
+
+                <button type="submit">Отправить</button>
+            </form>
         </section>
     </main>
-    <div id="cart" class="cart">
-        <h2>Корзина</h2>
-        <div id="cart-items"></div>
-        <p id="total-price">Итого: 0₽</p>
-        <button onclick="checkout()">Оформить заказ</button>
-        <button onclick="toggleCart()">Закрыть</button>
-    </div>
-
-    <!-- Форма обратной связи -->
-    <section>
-        <h2>Обратная связь</h2>
-        <form id="feedback-form" onsubmit="submitFeedback(event)">
-            <label for="name">Имя:</label>
-            <input type="text" id="name" name="name" required>
-
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
-
-            <label for="message">Сообщение:</label>
-            <textarea id="message" name="message" required></textarea>
-
-            <button type="submit">Отправить</button>
-        </form>
-    </section>
     
     <footer>
         <p>© 2023 Онлайн-магазин чая</p>
     </footer>
     
     <script>
-        let cart = [];
-        let totalPrice = 0;
-        let isRegistered = false; // Переменная для отслеживания статуса регистрации
-
         function registerUser (event) {
             event.preventDefault(); // Предотвращаем перезагрузку страницы
 
@@ -194,66 +83,10 @@
             console.log("Email:", email);
             console.log("Пароль:", password);
 
-            isRegistered = true; // Устанавливаем статус регистрации
             alert("Регистрация успешна!");
-            document.getElementById('registration-form').reset();
-        }
 
-        function addToCart(productId, productName, productPrice) {
-            if (!isRegistered) {
-                alert("Пожалуйста, зарегистрируйтесь, чтобы использовать корзину.");
-                return;
-            }
-
-            const existingProduct = cart.find(item => item.id === productId);
-            if (existingProduct) {
-                existingProduct.quantity++;
-            } else {
-                cart.push({ id: productId, name: productName, price: productPrice, quantity: 1 });
-            }
-
-            totalPrice += productPrice;
-            updateCart();
-        }
-
-        function updateCart() {
-            const cartItemsContainer = document.getElementById('cart-items');
-            cartItemsContainer.innerHTML = '';
-            cart.forEach(item => {
-                const itemElement = document.createElement('div');
-                itemElement.textContent = `${item.name} - ${item.quantity} шт. по ${item.price}₽`;
-                const removeButton = document.createElement('button');
-                removeButton.textContent = 'Удалить';
-                removeButton.onclick = () => removeFromCart(item.id);
-                itemElement.appendChild(removeButton);
-                cartItemsContainer.appendChild(itemElement);
-            });
-
-            document.getElementById('total-price').textContent = `Итого: ${totalPrice}₽`;
-            document.getElementById('cart-count').textContent = cart.length;
-        }
-
-        function removeFromCart(productId) {
-            const productIndex = cart.findIndex(item => item.id === productId);
-            if (productIndex > -1) {
-                totalPrice -= cart[productIndex].price * cart[productIndex].quantity;
-                cart.splice(productIndex, 1);
-                updateCart();
-            }
-        }
-
-        function toggleCart() {
-            const cartElement = document.getElementById('cart');
-            cartElement.classList.toggle('active');
-        }
-
-        function checkout() {
-            if (cart.length === 0) {
-                alert("Корзина пуста!");
-            } else {
-                alert("Оформление заказа...");
-                // Здесь можно добавить логику оформления заказа
-            }
+            // Перенаправляем на страницу каталога
+            window.location.href = 'catalog/catalog.html';
         }
 
         function submitFeedback(event) {
@@ -272,11 +105,6 @@
 
             // Очищаем форму
             document.getElementById('feedback-form').reset();
-        }
-
-        function toggleMenu() {
-            const navbar = document.getElementById('navbar');
-            navbar.classList.toggle('hidden');
         }
     </script>
 </body>

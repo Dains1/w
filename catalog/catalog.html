@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Каталог черного чая</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <style>
+        /* Ваши CSS переменные и стили */
+:root {
+    --main-bg-color: #f8f8f8;
+    --header-bg-color: #f0f0f0;
+    --card-bg-color: #fff;
+    --text-color: #333;
+    --hover-color: #27ae60;
+    --hover-color-dark: #219653;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+    --text-highlight-color: #2c3e50;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: var(--main-bg-color);
+    color: var(--text-color);
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: var(--header-bg-color);
+}
+
+nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: none; /* Скрываем меню по умолчанию */
+}
+
+nav ul.visible {
+    display: flex; /* Показываем меню, когда класс 'visible' добавлен */
+}
+
+nav li {
+    margin-right: 20px;
+}
+
+nav button {
+    background: none;
+    border: none;
+    color: inherit;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+nav button:hover {
+    color: blue;
+}
+
+/* Остальные стили... */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .hamburger {
+            cursor: pointer;
+            font-size: 24px;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        ul.hidden {
+            display: none;
+        }
+        ul li {
+            display: inline; /* Изменено для отображения кнопок в ряд */
+            margin: 0 10px;
+        }
+        button {
+            background-color: #444;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #555;
+        }
+        .product-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            padding: 20px;
+        }
+        .product-grid li {
+            list-style-type: none;
+            margin: 10px;
+            text-align: center;
+        }
+        .product-grid img {
+            max-width: 200px;
+            height: auto;
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #333;
+            color: white;
+            position: relative;
+        }
+        .cart {
+            display: none;
+            position: fixed;
+            top: 50px;
+            right: 20px;
+            width: 300px;
+            background-color: white;
+            border: 1px solid #ccc;
+            padding: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .cart.active {
+            display: block;
+        }
+        .cart-icon {
+            cursor: pointer;
+            position: relative;
+        }
+        .cart-icon span {
+            position: absolute;
+            top: -5px;
+            right: -10px;
+            background: red;
+            color: white;
+            border-radius: 50%;
+            padding: 2px 5px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="hamburger" onclick="toggleMenu()">
+                &#9776; <!-- Иконка гамбургера -->
+            </div>
+            <ul id="navbar" class="hidden">
+                <li><button onclick="location.href='catalog/catalog.html'">Главная</button></li>
+                <li><button onclick="location.href='#'">Каталог черного чая</button></li>
+                <li><button onclick="location.href='#'">О нас</button></li>
+                <li><button onclick="location.href='#'">Контакты</button></li>
+            </ul>
+        </nav>
+        <h1>Каталог черного чая</h1>
+        <div class="cart-icon" onclick="toggleCart()">
+            🛒 <span id="cart-count">0</span>
+        </div>
+    </header>
+    <main>
+        <section>
+            <h2>Новинки черного чая</h2>
+            <ul class="product-grid">
+                <li>
+                    <a href="#" data-id="1" data-name="Чай 1" data-price="300" onclick="addToCart(1, 'Чай 1', 300)">
+                        <img src="../images/tea1.jpg" alt="Чай 1">
+                        <p>Чай 1</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" data-id="2" data-name="Чай 2" data-price="350" onclick="addToCart(2, 'Чай 2', 350)">
+                        <img src="../images/tea2.jpg" alt="Чай 2">
+                        <p>Чай 2</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" data-id="3" data-name="Чай 3" data-price="400" onclick="addToCart(3, 'Чай 3', 400)">
+                        <img src="../images/tea3.jpg" alt="Чай 3">
+                        <p>Чай 3</p>
+                    </a>
+                </li>
+            </ul>
+        </section>
+    </main>
+    <div id="cart" class="cart">
+        <h2>Корзина</h2>
+        <div id="cart-items"></div>
+        <p id="total-price">Итого: 0₽</p>
+        <button onclick="checkout()">Оформить заказ</button>
+        <button onclick="toggleCart()">Закрыть</button>
+    </div>
+
+    <script>
+        // Функция для переключения меню
+        function toggleMenu() {
+            const navbar = document.getElementById('navbar');
+            navbar.classList.toggle('visible'); // Переключаем класс 'visible'
+        }
+
+        // Остальные ваши функции...
+    </script>
+
+    <footer>
+        <p>© 2023 Онлайн-магазин чая</p>
+    </footer>
+    
+    <script>
+        let cart = [];
+        let totalPrice = 0;
+
+        function addToCart(productId, productName, productPrice) {
+            const existingProduct = cart.find(item => item.id === productId);
+            if (existingProduct) {
+                existingProduct.quantity++;
+            } else {
+                cart.push({ id: productId, name: productName, price: productPrice, quantity: 1 });
+            }
+
+            totalPrice += productPrice;
+            updateCart();
+        }
+
+        function updateCart() {
+            const cartItemsContainer = document.getElementById('cart-items');
+            cartItemsContainer.innerHTML = '';
+            cart.forEach(item => {
+                const itemElement = document.createElement('div');
+                itemElement.textContent = `${item.name} - ${item.quantity} шт. по ${item.price}₽`;
+                const removeButton = document.createElement('button');
+                removeButton.textContent = 'Удалить';
+                removeButton.onclick = () => removeFromCart(item.id);
+                itemElement.appendChild(removeButton);
+                cartItemsContainer.appendChild(itemElement);
+            });
+
+            document.getElementById('total-price').textContent = `Итого: ${totalPrice}₽`;
+            document.getElementById('cart-count').textContent = cart.length;
+        }
+
+        function removeFromCart(productId) {
+            const productIndex = cart.findIndex(item => item.id === productId);
+            if (productIndex > -1) {
+                totalPrice -= cart[productIndex].price * cart[productIndex].quantity;
+                cart.splice(productIndex, 1);
+                updateCart();
+            }
+        }
+
+        function toggleCart() {
+            const cartElement = document.getElementById('cart');
+            cartElement.classList.toggle('active');
+        }
+
+        function checkout() {
+            if (cart.length === 0) {
+                alert("Корзина пуста!");
+            } else {
+                alert("Оформление заказа...");
+                // Здесь можно добавить логику оформления заказа
+            }
+        }
+
+        function toggleMenu() {
+            const navbar = document.getElementById('navbar');
+            navbar.classList.toggle('hidden');
+        }
+    </script>
+</body>
+</html>
+

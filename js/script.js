@@ -110,3 +110,19 @@ function submitFeedback(event) {
     // Очищаем форму
     document.getElementById('feedback-form').reset();
 }
+
+app.get('/', function(req, res) {
+    res.render('register'); // предполагая, что у вас есть представление 'register'
+  });
+
+  const isAuthenticated = (req, res, next) => {
+    if (req.isAuthenticated()) {
+      return next();
+    }
+    res.redirect('/login');
+  };
+  
+  // Затем примените этот middleware к вашим маршрутам корзины
+  app.get('/cart', isAuthenticated, function(req, res) {
+    // Отобразите корзину
+  });
