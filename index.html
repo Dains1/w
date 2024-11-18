@@ -83,6 +83,9 @@
             border-radius: 50%;
             padding: 2px 5px;
         }
+        .hidden {
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -104,6 +107,23 @@
         </div>
     </header>
     <main>
+        <!-- Форма регистрации -->
+        <section>
+            <h2>Регистрация</h2>
+            <form id="registration-form" onsubmit="registerUser (event)">
+                <label for="reg-name">Имя:</label>
+                <input type="text" id="reg-name" name="name" required>
+
+                <label for="reg-email">Email:</label>
+                <input type="email" id="reg-email" name="email" required>
+
+                <label for="reg-password">Пароль:</label>
+                <input type="password" id="reg-password" name="password" required>
+
+                <button type="submit">Зарегистрироваться</button>
+            </form>
+        </section>
+
         <section>
             <h2>Новинки черного чая</h2>
             <ul class="product-grid">
@@ -135,14 +155,56 @@
         <button onclick="checkout()">Оформить заказ</button>
         <button onclick="toggleCart()">Закрыть</button>
     </div>
+
+    <!-- Форма обратной связи -->
+    <section>
+        <h2>Обратная связь</h2>
+        <form id="feedback-form" onsubmit="submitFeedback(event)">
+            <label for="name">Имя:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="message">Сообщение:</label>
+            <textarea id="message" name="message" required></textarea>
+
+            <button type="submit">Отправить</button>
+        </form>
+    </section>
+    
     <footer>
         <p>© 2023 Онлайн-магазин чая</p>
     </footer>
+    
     <script>
         let cart = [];
         let totalPrice = 0;
+        let isRegistered = false; // Переменная для отслеживания статуса регистрации
+
+        function registerUser (event) {
+            event.preventDefault(); // Предотвращаем перезагрузку страницы
+
+            const name = document.getElementById('reg-name').value;
+            const email = document.getElementById('reg-email').value;
+            const password = document.getElementById('reg-password').value;
+
+            // Здесь можно добавить логику для регистрации пользователя на сервере
+            console.log("Имя:", name);
+            console.log("Email:", email);
+            console.log("Пароль:", password);
+
+            isRegistered = true; // Устанавливаем статус регистрации
+            alert("Регистрация успешна!");
+            document.getElementById('registration-form').reset();
+        }
 
         function addToCart(productId, productName, productPrice) {
+            if (!isRegistered) {
+                alert("Пожалуйста, зарегистрируйтесь, чтобы использовать корзину.");
+                return;
+            }
+
             const existingProduct = cart.find(item => item.id === productId);
             if (existingProduct) {
                 existingProduct.quantity++;
@@ -192,6 +254,24 @@
                 alert("Оформление заказа...");
                 // Здесь можно добавить логику оформления заказа
             }
+        }
+
+        function submitFeedback(event) {
+            event.preventDefault(); // Предотвращаем перезагрузку страницы
+
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+
+            // Здесь вы можете отправить данные на сервер или обработать их как вам нужно
+            console.log("Имя:", name);
+            console.log("Email:", email);
+            console.log("Сообщение:", message);
+
+            alert("Спасибо за ваш отзыв!");
+
+            // Очищаем форму
+            document.getElementById('feedback-form').reset();
         }
 
         function toggleMenu() {

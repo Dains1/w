@@ -93,7 +93,20 @@ function checkout() {
     }
 }
 
-// Обработчики событий для иконки корзины и кнопки меню
-document.querySelector('.cart-icon').addEventListener('click', toggleCart);
-document.querySelector('.hamburger').addEventListener('click', toggleMenu);
+function submitFeedback(event) {
+    event.preventDefault(); // Предотвращаем перезагрузку страницы
 
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const message = document.getElementById('message').value;
+
+    // Здесь вы можете отправить данные на сервер или обработать их как вам нужно
+    console.log("Имя:", name);
+    console.log("Email:", email);
+    console.log("Сообщение:", message);
+
+    alert("Спасибо за ваш отзыв!");
+
+    // Очищаем форму
+    document.getElementById('feedback-form').reset();
+}
